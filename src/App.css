@@ -1,38 +1,117 @@
-.App {
-  text-align: center;
+.container {
+  margin: 1rem;
+  padding: 32px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.task-list {
+  list-style: none;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.task-item {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 16px;
+  border-radius: 0.7rem;
+  border-left: 8px solid;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.completed {
+  /*background-color: #a6e7a0;*/
+  text-decoration: line-through;
+}
+
+.task-form {
+  margin-top: 20px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+}
+
+.task-form input {
+  flex: 1;
+  padding: 10px;
+  /*border: 1px solid #ccc;*/
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+  width: 500px
+}
+
+.multiline-form  input{
+  width: 500px
+}
+
+.task-form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.task-form button:hover {
+  background-color: #0056b3;
+}
+
+
+.delete-btn {
+  color: red;
+}
+
+.list-parent {
+  cursor: grabbing;
+}
+
+.h70 {
+  min-height: 70px;
+}
+
+
+/* font text styles*/
+.title-text {
+  font-size: 24px;
+  font-weight: 600;
+}
+.sub-text {
+  font-size: 12px;
+}
+.card-text {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+
+
+/*margin styles*/
+.mr-4 {
+  margin-right: 4px;
+}
+.mr-10 {
+  margin-right: 10px;
+}
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+
+
+
+/*flex classes*/
+.flex {
+  display: flex;
+}
+
+.justify-center {
+  justify-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
 }
-
-.App-link {
-  color: #61dafb;
+.align-center {
+  align-items: center;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.flex-column {
+  flex-direction: column;
 }

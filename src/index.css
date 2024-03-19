@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.flex {
+  display: flex;
+}
+.space-btw{
+  justify-content: space-between;
+}
+
+button {
+  background-color: white;
+  border: none;
+}
