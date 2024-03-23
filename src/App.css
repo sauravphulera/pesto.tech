@@ -16,10 +16,11 @@
   border-radius: 0.7rem;
   border-left: 8px solid;
 }
-
-.completed {
-  /*background-color: #a6e7a0;*/
-  text-decoration: line-through;
+.task-status-chip {
+  padding: 2px;
+  border: 1px solid;
+  width: fit-content;
+  margin-top: 1em;
 }
 
 .task-form {
@@ -68,6 +69,12 @@
   min-height: 70px;
 }
 
+.loader-container {
+  position: absolute;
+  top: 50%;
+  left: 48%;
+}
+
 
 /* font text styles*/
 .title-text {
@@ -114,4 +121,20 @@
 }
 .flex-column {
   flex-direction: column;
+}
+.space-between {
+  justify-content: space-between;
+}
+
+
+/**dialog classes modal**/
+.dialog-heading {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.dialog-container {
+  padding: 24px;
 }

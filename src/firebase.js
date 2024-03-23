@@ -54,7 +54,7 @@ export const setTaskList = async (taskObj) => {
 			throw "Document does not exist!";
 		  }
 	  
-		  transaction.update(sfDocRef, { status: taskObj.status });
+		  transaction.update(sfDocRef, { status: taskObj.status, title: taskObj.title, description: taskObj.description });
 		});
 		console.log("Transaction successfully committed!");
 	  } catch (e) {

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import TextField from '@mui/material/TextField';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { TASKSTATUSLIST } from '../data/contants';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
-const TaskForm = ({ addTask }) => {
+const TaskForm = ({ addTask, dialogData, isEditOpen, updateTask }) => {
   const [title, setTitle] = useState(' ');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('');
@@ -15,17 +15,33 @@ const TaskForm = ({ addTask }) => {
 
   const handleSubmit = (e) => {
     console.log(description)
-    //e.preventDefault();
+    if(isEditOpen) {
+      updateTask({
+        title,
+        description,
+        status,
+        id: dialogData.id,
+      })
+    } else {
       addTask({
-		title: title,
-		description: description,
-		status: status
-	  });
-    //  setTitle('');
+        title: title,
+        description: description,
+        status: status
+        });
+    }
   };
 
+  useEffect(() => {
+      console.log(dialogData);
+      if(dialogData) {
+        setTitle(dialogData.title);
+        setDescription(dialogData.description);
+        setStatus(dialogData.status);
+      }
+  }, [])
+
   return (
-    <div className="container">
+    <div className='dialog-container '>
       <form className="task-form flex flex-column">
         <div className='mb-20'>
           <TextField id="outlined-basic" label="Title" variant="outlined" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter task title"/>
@@ -69,7 +85,11 @@ const TaskForm = ({ addTask }) => {
           <option value="done">Done</option>
         </select>*/}
       </form>
-      <div className='task-form flex justify-center delete-btn'> <button data-tooltip-content="Delete Task" type="submit" onClick={(e) => handleSubmit()}>Add Task</button></div>
+      <div className='task-form flex justify-center delete-btn'> 
+        <button type="submit" onClick={(e) => handleSubmit()}>
+            {isEditOpen ? 'Update Task':'Add Task'}
+          </button>
+      </div>
     </div>
   );
 };

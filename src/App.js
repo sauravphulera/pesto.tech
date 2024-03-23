@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import TaskList from './components/TaskList';
-import TaskForm from './components/TaskForm';
 import './App.css';
 import { getTaskList, addTaskList, setTaskList, deleteTaskFromStore } from './firebase';
+import Loading from './Loading';
 
 function App() {
   const [taskData, setTaskData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getTaskListFromStore = () =>{
-    console.log('fetching task list')
+    setIsLoading(true);
     getTaskList().then(res => {
       setTaskData([...res]);
+      setIsLoading(false);
       console.log(res)
     }).catch(e => {
       console.log(e);
@@ -18,8 +20,10 @@ function App() {
   }
 
   const handleUpdateTasks = (data) => {
+    setIsLoading(true);
     setTaskList(data).then(() => {
       getTaskListFromStore();
+      setIsLoading(false);
     })
   }
 
@@ -49,6 +53,11 @@ function App() {
     getTaskListFromStore();
   }, [])
 
+
+  if(isLoading) {
+    return <Loading />
+  }
+
   return (
     <div className="container flex">
       {/*<h1>Task Management</h1>*/}
@@ -56,7 +65,7 @@ function App() {
       <div style={{flexBasis: '70%'}}>
         <TaskList tasks={taskData} updateTaskData={handleUpdateTasks} deleteTask={handleDeleteTask} addTaskData={addTask} />
       </div>
-      <div style={{flexBasis: '30%'}}> Analytics</div>
+      {/*<div style={{flexBasis: '30%'}}> Analytics</div>*/}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 export const statusMap = {
-	"todo": 'rgb(52 145 198)',
-	"in_progress": '#d49521',
-	"done": 'rgb(108 150 13)'
+	"todo": {color: 'rgb(52 145 198)', displayName: 'To Do'},
+	"in_progress": {color: '#d49521', displayName: 'In progress'},
+	"done": {color: 'rgb(108 150 13)', displayName: 'Completed'}
 }
 
 export const TASKSTATUSLIST = [

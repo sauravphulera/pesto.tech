@@ -31,10 +31,19 @@ const getFilterList = (tasks, statusFilter) =>  {
 
 const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
 
-  const [openDialog, setOpenDialog] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState({
+    open: false,
+    data: {
+      id: null,
+      status: null,
+      title: null,
+    }
+  });
   const [statusFilter, setStatusFilter] = useState('All');
 
   const [filteredTasks, setFilteredTasks] = useState([...tasks] || []);
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
 
   //function and vars for drag functionality
@@ -63,11 +72,18 @@ const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
   };
 
 
-  const handleAddTaskData = (title,
+  const handleAddTaskData = ({title,
 		description,
-		status) => {
+		status}) => {
 
-    addTaskData(title, description, status);
+    addTaskData({title, description, status});
+    handleCloseDialog();
+  }
+
+  const handleUpdateTask = ({
+    title, description, status, id
+  }) => {
+    updateTaskData({title, description, status, id});
     handleCloseDialog();
   }
 
@@ -80,8 +96,14 @@ const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
   };
 
  
-  const handleTaskChange = (id, status, title) => {
-    updateTaskData({id, status, title});
+  const handleEditDialogOpen = ({id, status, description, title}) => {
+    setOpenDialog({
+        open: true,
+        data: {
+          id, status, title, description
+      }
+    });
+    setIsEditOpen(true);
   }
 
   const handleDeleteTask = (id) => {
@@ -90,11 +112,12 @@ const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
   }
 
   const handleDialogOpen = () => {
-    setOpenDialog(true);
+    setOpenDialog({open: true});
   }
 
   const handleCloseDialog = () => {
-    setOpenDialog(false);
+    setOpenDialog({open: false});
+    setIsEditOpen(false);
   };
 
   useEffect(() => {
@@ -104,7 +127,7 @@ const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
   return (
     <>
         <div className="container">
-          <div className='flex align-center mb-20'>
+          <div className='flex align-center space-between mb-20'>
               <div className="mt-4 mb-3 title-text mr-10">Task List</div>
               <div><Button size="small" variant="contained" onClick={handleDialogOpen}>Create New Task</Button></div>
           </div>
@@ -131,24 +154,20 @@ const TaskList = ({ tasks, updateTaskData, deleteTask, addTaskData }) => {
                    onDragEnd={drop}
                    draggable
               >
-                <TaskItem task={task} onTaskChange={handleTaskChange} onTaskDelete={handleDeleteTask} />
+                <TaskItem task={task} openEditDialog={handleEditDialogOpen} onTaskDelete={handleDeleteTask} />
               </div>
             ))}
           </ul>
         </div>
         <Dialog 
         maxWidth="md"
-          open={openDialog}
+          open={openDialog.open}
           onClose={handleCloseDialog}
         >
-          <DialogTitle>Create New Task</DialogTitle>
+          <DialogTitle className='dialog-heading'>{ isEditOpen ? 'Edit Your Task':'Create New Task'}</DialogTitle>
           <DialogContent>
-            <TaskForm addTask={handleAddTaskData} />
+            <TaskForm updateTask={handleUpdateTask} addTask={handleAddTaskData} dialogData={openDialog?.data} isEditOpen={isEditOpen} />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={handleCloseDialog}>Cancel</Button>
-            <Button type="submit">Add Task</Button>
-          </DialogActions>
         </Dialog>
     </>
   );
